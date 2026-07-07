@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sürpriz Yumurta</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(180deg,#ffe8f3,#ffffff);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+overflow:hidden;
+}
+
+#game{
+text-align:center;
+}
+
+h2{
+margin-bottom:25px;
+color:#ff4b91;
+}
+
+img{
+max-width:260px;
+cursor:pointer;
+transition:.4s;
+user-select:none;
+}
+
+.bounce{
+animation:bounce .7s infinite alternate;
+}
+
+@keyframes bounce{
+from{transform:translateY(0);}
+to{transform:translateY(-12px);}
+}
+
+.shake{
+animation:shake .4s;
+}
+
+@keyframes shake{
+0%{transform:rotate(0);}
+25%{transform:rotate(8deg);}
+50%{transform:rotate(-8deg);}
+75%{transform:rotate(6deg);}
+100%{transform:rotate(0);}
+}
+
+.pop{
+animation:pop .6s;
+}
+
+@keyframes pop{
+0%{transform:scale(.3);}
+80%{transform:scale(1.15);}
+100%{transform:scale(1);}
+}
+
+#message{
+margin-top:20px;
+font-size:28px;
+font-weight:bold;
+color:#ff2d75;
+display:none;
+}
+
+.confetti{
+position:absolute;
+width:10px;
+height:10px;
+top:-20px;
+animation:fall 3s linear forwards;
+}
+
+@keyframes fall{
+to{
+transform:translateY(110vh) rotate(720deg);
+opacity:0;
+}
+}
+
+button{
+margin-top:25px;
+padding:12px 25px;
+border:none;
+border-radius:10px;
+background:#ff4b91;
+color:white;
+font-size:18px;
+cursor:pointer;
+display:none;
+}
+</style>
+</head>
+
+<body>
+
+<div id="game">
+
+<h2 id="title">🥚 Yumurtaya Dokun!</h2>
+
+<img id="egg" src="yumurta.png" class="bounce">
+
+<div id="message">
+🎉 Tebrikler!<br>
+En büyük sürprizi buldun 😂❤️
+</div>
+
+<button onclick="location.reload()">Tekrar Oyna</button>
+
+</div>
+
+<script>
+
+let step=0;
+const egg=document.getElementById("egg");
+
+egg.onclick=function(){
+
+if(step==0){
+
+egg.classList.remove("bounce");
+egg.classList.add("shake");
+
+setTimeout(()=>{
+egg.src="kapsul.png";
+egg.classList.remove("shake");
+egg.classList.add("bounce");
+document.getElementById("title").innerText="🟡 Kapsüle Dokun!";
+},400);
+
+step++;
+
+}
+
+else if(step==1){
+
+egg.classList.remove("bounce");
+egg.classList.add("pop");
+
+setTimeout(()=>{
+egg.src="surpriz.png";
+egg.style.maxWidth="320px";
+document.getElementById("title").innerText="😂 Sürpriz!";
+document.getElementById("message").style.display="block";
+document.querySelector("button").style.display="inline-block";
+confetti();
+},500);
+
+step++;
+
+}
+
+}
+
+function confetti(){
+
+for(let i=0;i<150;i++){
+
+let c=document.createElement("div");
+
+c.className="confetti";
+
+c.style.left=Math.random()*100+"vw";
+
+c.style.background=
+`hsl(${Math.random()*360},100%,50%)`;
+
+c.style.animationDuration=(Math.random()*2+2)+"s";
+
+document.body.appendChild(c);
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
